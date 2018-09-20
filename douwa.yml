@@ -2,7 +2,7 @@ pipeline:
   compile:
     image: golang:1.8.5
     commands:
-      - go build
+      - go build -o dist/startup
 
   docker:
     image: douwa/docker

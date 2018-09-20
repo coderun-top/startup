@@ -1,5 +1,4 @@
-FROM daocloud.io/library/golang:1.9
+FROM alpine:3.4
 
-COPY startup /go/bin
-
-CMD ["startup"]
+ADD dist/startup /bin/
+ENTRYPOINT ["/bin/startup"]
