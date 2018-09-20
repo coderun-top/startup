@@ -6,8 +6,8 @@ pipeline:
 
   docker:
     image: douwa/docker
-    repo_name: startup
     registry_name: douwa
+    repo_name: startup
     dockerfile: Dockerfile
     context: .
     tags: latest
