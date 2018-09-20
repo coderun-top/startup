@@ -1,1 +1,3 @@
-# douwa-demo
+# Demo
+
+A Demo for douwa.tech & kubernetes

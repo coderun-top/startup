@@ -1,0 +1,18 @@
+pipeline:
+  compile:
+    image: golang:1.8.5
+    commands:
+      - go build
+
+  docker:
+    image: douwa/docker
+    repo_name: startup
+    registry_name: douwa
+    dockerfile: Dockerfile
+    context: .
+    tags: latest
+
+  deploy:
+    image: douwa/kube
+    cluster_name: kube1
+    template: deployment.yaml
