@@ -11,4 +11,4 @@ spec:
     spec:
       containers:
       - name: startup
-        image: r.crun.top/douwa/startup
+        image: dev.crun.top/trams/startup
