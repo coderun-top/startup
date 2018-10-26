@@ -7,7 +7,7 @@ steps:
   docker:
     image: douwa/docker
     registry_name: coderun
-    repo_name: trams/startup
+    repo_name: hellwen/startup
     dockerfile_content: |
         FROM alpine:3.4
         ADD dist/startup /bin/
@@ -32,4 +32,4 @@ steps:
             spec:
               containers:
               - name: startup
-                image: dev.crun.top/trams/startup
+                image: r.crun.top/hellwen/startup

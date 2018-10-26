@@ -7,7 +7,7 @@ steps:
   docker:
     image: douwa/docker
     registry_name: coderun
-    repo_name: trams/startup
+    repo_name: hellwen/startup
     dockerfile: Dockerfile
     context: .
     tags: latest
