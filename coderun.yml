@@ -1,0 +1,17 @@
+steps:
+  compile:
+    image: golang:1.8.5
+    commands:
+      - go build -o dist/startup
+      - go test
+
+  docker:
+    image: douwa/docker
+    registry_name: coderun
+    repo_name: hellwen/startup
+    dockerfile_content: |
+      FROM alpine:3.4
+      ADD dist/startup /bin/
+      ENTRYPOINT ["/bin/startup"]
+    context: .
+    tags: latest
