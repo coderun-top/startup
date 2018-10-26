@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: startup
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        name: startup
+    spec:
+      containers:
+      - name: startup
+        image: r.crun.top/douwa/startup

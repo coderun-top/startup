@@ -18,18 +18,4 @@ steps:
   deploy:
     image: douwa/kubectl
     cluster: kube1
-    template_content: |
-        apiVersion: extensions/v1beta1
-        kind: Deployment
-        metadata:
-          name: startup
-        spec:
-          replicas: 2
-          template:
-            metadata:
-              labels:
-                name: startup
-            spec:
-              containers:
-              - name: startup
-                image: dev.crun.top/trams/startup
+    deploy_name: startup

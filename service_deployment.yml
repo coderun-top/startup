@@ -1,0 +1,36 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: startup
+  namespace: default
+  labels:
+    name: startup
+spec:
+  selector:
+    name: startup
+  ports:
+  - port: 80
+    targetPort: 80
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: startup
+  namespace: default
+  labels:
+    name: startup
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: startup
+  template:
+    metadata:
+      labels:
+        app: startup
+    spec:
+      containers:
+      - name: startup
+        image: dev.crun.top/trams/startup
+        ports:
+        - containerPort: 80

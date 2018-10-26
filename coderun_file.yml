@@ -1,0 +1,18 @@
+steps:
+  compile:
+    image: golang:1.8.5
+    commands:
+      - go build -o dist/startup
+
+  docker:
+    image: douwa/docker
+    registry_name: coderun
+    repo_name: trams/startup
+    dockerfile: Dockerfile
+    context: .
+    tags: latest
+
+  deploy:
+    image: douwa/kubectl
+    cluster: kube1
+    template: deployment.yml
