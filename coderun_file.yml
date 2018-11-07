@@ -14,5 +14,5 @@ steps:
 
   deploy:
     image: crun/kube
-    cluster_name: kube1
+    cluster_name: hssh1
     template: deployment.yml
