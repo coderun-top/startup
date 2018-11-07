@@ -5,7 +5,7 @@ steps:
       - go build -o dist/startup
 
   docker:
-    image: douwa/docker
+    image: crun/docker
     registry_name: coderun
     repo_name: hellwen/startup
     dockerfile: Dockerfile
@@ -13,6 +13,6 @@ steps:
     tags: latest
 
   deploy:
-    image: douwa/kubectl
-    cluster: kube1
+    image: crun/kube
+    cluster_name: hssh1
     template: deployment.yml
