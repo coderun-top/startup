@@ -14,5 +14,5 @@ steps:
 
   deploy:
     image: crun/kube
-    cluster_name: hssh1
+    cluster_name: myk8s
     template: deployment.yml

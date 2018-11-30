@@ -17,7 +17,7 @@ steps:
 
   deploy:
     image: crun/kube
-    cluster_name: hssh1
+    cluster_name: myk8s
     template_content: |
         apiVersion: extensions/v1beta1
         kind: Deployment
