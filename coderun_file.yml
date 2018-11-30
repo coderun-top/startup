@@ -15,4 +15,5 @@ steps:
   deploy:
     image: crun/kube
     cluster_name: myk8s
+    namespace: default
     template: deployment.yml

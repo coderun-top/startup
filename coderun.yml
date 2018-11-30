@@ -18,6 +18,7 @@ steps:
   deploy:
     image: crun/kube
     cluster_name: myk8s
+    namespace: default
     template_content: |
         apiVersion: extensions/v1beta1
         kind: Deployment

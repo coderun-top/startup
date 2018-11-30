@@ -19,3 +19,4 @@ steps:
     image: crun/kube
     cluster_name: myk8s
     deploy_name: startup
+    namespace: default
