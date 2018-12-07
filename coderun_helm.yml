@@ -18,10 +18,8 @@ steps:
   push_chart:
     image: crun/helm:dev
     cluster_name: myk8s
-    namespace: default
     helm_name: coderun
     action: push
-    chart_repo: default
     chart_name: mychart
 
   install_chart:
@@ -31,5 +29,4 @@ steps:
     helm_name: coderun
     action: install
     release_name: mychart
-    chart_repo: default
     chart_name: mychart
