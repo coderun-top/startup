@@ -15,7 +15,7 @@ steps:
     context: .
     tags: latest
 
-  deploy:
+  deploy-inline:
     image: crun/kube
     cluster_name: myk8s
     namespace: default
@@ -34,3 +34,31 @@ steps:
               containers:
               - name: startup
                 image: dev.crun.top/trams/startup
+
+  deploy-file:
+    image: crun/kube
+    cluster_name: myk8s
+    namespace: default
+    template: deployment.yml
+
+  deploy-config:
+    image: crun/kube
+    cluster_name: myk8s
+    deploy_name: startup
+    namespace: default
+
+  push-chart:
+    image: crun/helm
+    cluster_name: myk8s
+    helm_name: coderun
+    action: push
+    chart_name: mychart
+
+  install-chart:
+    image: crun/helm
+    cluster_name: myk8s
+    namespace: default
+    helm_name: coderun
+    action: install
+    release_name: mychart
+    chart_name: coderun/mychart
