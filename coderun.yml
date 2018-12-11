@@ -1,0 +1,64 @@
+steps:
+  compile:
+    image: golang:1.8.5
+    commands:
+      - go build -o dist/startup
+
+  docker:
+    image: crun/docker
+    registry_name: coderun
+    repo_name: trams/startup
+    dockerfile_content: |
+        FROM alpine:3.4
+        ADD dist/startup /bin/
+        ENTRYPOINT ["/bin/startup"]
+    context: .
+    tags: latest
+
+  deploy-inline:
+    image: crun/kube
+    cluster_name: myk8s
+    namespace: default
+    template_content: |
+        apiVersion: extensions/v1beta1
+        kind: Deployment
+        metadata:
+          name: startup
+        spec:
+          replicas: 2
+          template:
+            metadata:
+              labels:
+                name: startup
+            spec:
+              containers:
+              - name: startup
+                image: dev.crun.top/trams/startup
+
+  deploy-file:
+    image: crun/kube
+    cluster_name: myk8s
+    namespace: default
+    template: deployment.yml
+
+  deploy-config:
+    image: crun/kube
+    cluster_name: myk8s
+    deploy_name: startup
+    namespace: default
+
+  push-chart:
+    image: crun/helm
+    cluster_name: myk8s
+    helm_name: coderun
+    action: push
+    chart_name: mychart
+
+  install-chart:
+    image: crun/helm
+    cluster_name: myk8s
+    namespace: default
+    helm_name: coderun
+    action: install
+    release_name: mychart
+    chart_name: coderun/mychart
