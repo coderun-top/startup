@@ -20,16 +20,19 @@ steps:
     cluster_name: myk8s
     namespace: default
     template_content: |
-        apiVersion: extensions/v1beta1
+        apiVersion: apps/v1
         kind: Deployment
         metadata:
           name: startup
         spec:
-          replicas: 2
+          replicas: 1
+          selector:
+            matchLabels:
+              app: startup
           template:
             metadata:
               labels:
-                name: startup
+                app: startup
             spec:
               containers:
               - name: startup
