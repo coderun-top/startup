@@ -65,3 +65,5 @@ steps:
     action: install
     release_name: mychart
     chart_name: coderun/mychart
+
+branches: dev
