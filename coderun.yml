@@ -15,21 +15,55 @@ steps:
     context: .
     tags: latest
 
-  deploy:
+  deploy-inline:
     image: crun/kube
-    cluster_name: hssh1
+    cluster_name: myk8s
+    namespace: default
     template_content: |
-        apiVersion: extensions/v1beta1
+        apiVersion: apps/v1
         kind: Deployment
         metadata:
           name: startup
         spec:
-          replicas: 2
+          replicas: 1
+          selector:
+            matchLabels:
+              app: startup
           template:
             metadata:
               labels:
-                name: startup
+                app: startup
             spec:
               containers:
               - name: startup
                 image: r.crun.top/hellwen/startup
+
+  deploy-file:
+    image: crun/kube
+    cluster_name: myk8s
+    namespace: default
+    template: deployment.yml
+
+  deploy-config:
+    image: crun/kube
+    cluster_name: myk8s
+    deploy_name: startup
+    namespace: default
+
+  push-chart:
+    image: crun/helm
+    cluster_name: myk8s
+    helm_name: coderun
+    action: push
+    chart_name: mychart
+
+  install-chart:
+    image: crun/helm
+    cluster_name: myk8s
+    namespace: default
+    helm_name: coderun
+    action: install
+    release_name: mychart
+    chart_name: coderun/mychart
+
+branches: master
