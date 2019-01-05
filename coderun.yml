@@ -6,17 +6,20 @@ steps:
 
   docker:
     image: crun/docker
-    registry_name: coderun
-    repo_name: hellwen/startup
-    dockerfile_content: |
-        FROM alpine:3.4
-        ADD dist/startup /bin/
-        ENTRYPOINT ["/bin/startup"]
-    context: .
-    tags: latest
+    pull: true
+    settings:
+      registry_name: coderun
+      repo_name: hellwen/startup
+      dockerfile_content: |
+          FROM alpine:3.4
+          ADD dist/startup /bin/
+          ENTRYPOINT ["/bin/startup"]
+      context: .
+      tags: latest
 
   deploy-inline:
     image: crun/kube
+    pull: true
     cluster_name: myk8s
     namespace: default
     template_content: |
@@ -36,22 +39,26 @@ steps:
             spec:
               containers:
               - name: startup
-                image: r.crun.top/hellwen/startup
+                image: {{CR_IMAGE}}
 
   deploy-file:
     image: crun/kube
+    pull: true
     cluster_name: myk8s
     namespace: default
     template: deployment.yml
 
   deploy-config:
     image: crun/kube
+    pull: true
     cluster_name: myk8s
     deploy_name: startup
     namespace: default
+    template_image: ${CR_IMAGE}
 
   push-chart:
     image: crun/helm
+    pull: true
     cluster_name: myk8s
     helm_name: coderun
     action: push
@@ -59,6 +66,7 @@ steps:
 
   install-chart:
     image: crun/helm
+    pull: true
     cluster_name: myk8s
     namespace: default
     helm_name: coderun
