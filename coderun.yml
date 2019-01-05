@@ -20,58 +20,63 @@ steps:
   deploy-inline:
     image: crun/kube
     pull: true
-    cluster_name: myk8s
-    namespace: default
-    template_content: |
-        apiVersion: apps/v1
-        kind: Deployment
-        metadata:
-          name: startup
-        spec:
-          replicas: 1
-          selector:
-            matchLabels:
-              app: startup
-          template:
-            metadata:
-              labels:
+    settings:
+      cluster_name: myk8s
+      namespace: default
+      template_content: |
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: startup
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
                 app: startup
-            spec:
-              containers:
-              - name: startup
-                image: {{CR_IMAGE}}
+            template:
+              metadata:
+                labels:
+                  app: startup
+              spec:
+                containers:
+                - name: startup
+                  image: {{CR_IMAGE}}
 
   deploy-file:
     image: crun/kube
     pull: true
-    cluster_name: myk8s
-    namespace: default
-    template: deployment.yml
+    settings:
+      cluster_name: myk8s
+      namespace: default
+      template: deployment.yml
 
   deploy-config:
     image: crun/kube
     pull: true
-    cluster_name: myk8s
-    deploy_name: startup
-    namespace: default
-    template_image: ${CR_IMAGE}
+    settings:
+      cluster_name: myk8s
+      deploy_name: startup
+      namespace: default
+      template_image: ${CR_IMAGE}
 
   push-chart:
     image: crun/helm
     pull: true
-    cluster_name: myk8s
-    helm_name: coderun
-    action: push
-    chart_name: mychart
+    settings:
+      cluster_name: myk8s
+      helm_name: coderun
+      action: push
+      chart_name: mychart
 
   install-chart:
     image: crun/helm
     pull: true
-    cluster_name: myk8s
-    namespace: default
-    helm_name: coderun
-    action: install
-    release_name: mychart
-    chart_name: coderun/mychart
+    settings:
+      cluster_name: myk8s
+      namespace: default
+      helm_name: coderun
+      action: install
+      release_name: mychart
+      chart_name: coderun/mychart
 
 branches: master
