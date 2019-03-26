@@ -1,4 +1,12 @@
+cache:
+  - ./node_modules
+
 steps:
+  install-npm:
+    image: node:8
+    commands:
+      - npm --registry https://registry.npm.taobao.org install
+
   compile:
     image: golang:1.8.5
     commands:
