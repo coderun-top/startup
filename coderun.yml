@@ -1,5 +1,7 @@
-# cache:
-#  - ./node_modules
+cache:
+  key: ${CI_COMMIT_BRANCH}
+  paths:
+    - ./
 
 steps:
     # install-npm:
