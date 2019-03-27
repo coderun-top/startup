@@ -25,6 +25,11 @@ steps:
       context: .
       tags: latest
 
+  check:
+    image: golang:1.8.5
+    commands:
+      - ls -l .
+
   deploy-inline:
     image: crun/kube
     pull: true
