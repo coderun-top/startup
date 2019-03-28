@@ -27,11 +27,6 @@ steps:
       context: .
       tags: latest
 
-  check:
-    image: golang:1.8.5
-    commands:
-      - ls -l .
-
   deploy-inline:
     image: crun/kube
     pull: true
@@ -56,6 +51,11 @@ steps:
                 containers:
                 - name: startup
                   image: {{CR_IMAGE}}
+
+  check-file:
+    image: golang:1.8.5
+    commands:
+      - ls -l .
 
   deploy-file:
     image: crun/kube
