@@ -1,7 +1,7 @@
 cache:
   key: ${CI_COMMIT_BRANCH}
   paths:
-    - ./
+    - ./node_modules
 
 steps:
   compile:
