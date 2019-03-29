@@ -9,7 +9,7 @@ steps:
     commands:
       - go build -o dist/startup
 
-  compile:
+  docker:
     image: crun/docker
     pull: true
     settings:
