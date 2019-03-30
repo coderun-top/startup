@@ -94,4 +94,5 @@ steps:
       release_name: mychart
       chart_name: coderun/mychart
 
-branches: dev
+trigger:
+  branch: dev
