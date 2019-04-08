@@ -14,7 +14,7 @@ steps:
     pull: true
     settings:
       registry_name: coderun
-      repo_name: trams/startup
+      repo_name: hellwen/startup
       dockerfile_content: |
           FROM alpine:3.4
           ADD dist/startup /bin/
@@ -95,4 +95,6 @@ steps:
       chart_name: coderun/mychart
 
 trigger:
-  branch: dev
+  branch:
+    - dev
+    - master

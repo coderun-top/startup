@@ -1,5 +1,2 @@
-# Demo
+# startup
 
-A Demo for douwa.tech & kubernetes
-
-test
