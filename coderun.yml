@@ -1,0 +1,100 @@
+cache:
+  key: ${CI_COMMIT_BRANCH}
+  paths:
+    - ./node_modules
+
+steps:
+  compile:
+    image: golang:1.8.5
+    commands:
+      - go build -o dist/startup
+
+  docker:
+    image: crun/docker
+    pull: true
+    settings:
+      registry_name: coderun
+      repo_name: hellwen/startup
+      dockerfile_content: |
+          FROM alpine:3.4
+          ADD dist/startup /bin/
+          ENTRYPOINT ["/bin/startup"]
+      context: .
+      tags: latest
+
+  deploy-inline:
+    image: crun/kube
+    pull: true
+    settings:
+      cluster_name: myk8s
+      namespace: default
+      template_content: |
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: startup
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: startup
+            template:
+              metadata:
+                labels:
+                  app: startup
+              spec:
+                containers:
+                - name: startup
+                  image: {{CR_IMAGE}}
+
+  check-file:
+    image: golang:1.8.5
+    commands:
+      - ls -l .
+
+  install-npm:
+    image: node:8
+    commands:
+      - npm --registry https://registry.npm.taobao.org install
+
+  deploy-file:
+    image: crun/kube
+    pull: true
+    settings:
+      cluster_name: myk8s
+      namespace: default
+      template: deployment.yml
+
+  deploy-config:
+    image: crun/kube
+    pull: true
+    settings:
+      cluster_name: myk8s
+      deploy_name: startup
+      namespace: default
+      template_image: ${CR_IMAGE}
+
+  push-chart:
+    image: crun/helm
+    pull: true
+    settings:
+      cluster_name: myk8s
+      helm_name: coderun
+      action: push
+      chart_name: mychart
+
+  install-chart:
+    image: crun/helm
+    pull: true
+    settings:
+      cluster_name: myk8s
+      namespace: default
+      helm_name: coderun
+      action: install
+      release_name: mychart
+      chart_name: coderun/mychart
+
+trigger:
+  branch:
+    - dev
+    - master
