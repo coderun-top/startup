@@ -14,7 +14,7 @@ steps:
     pull: true
     settings:
       registry_name: coderun
-      repo_name: hellwen/startup
+      repo_name: startup
       dockerfile_content: |
           FROM alpine:3.4
           ADD dist/startup /bin/
