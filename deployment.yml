@@ -14,4 +14,4 @@ spec:
     spec:
       containers:
       - name: startup
-        image: dev.crun.top/trams/startup
+        image: dev.crun.top/hellwen/startup
