@@ -1,4 +1,2 @@
 # startup
 
-test
-
